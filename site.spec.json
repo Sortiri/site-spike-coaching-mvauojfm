@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "brand": {
+    "name": "Example Coaching",
+    "tagline": "Stronger every week.",
+    "accent": "#5dffc2"
+  },
+  "theme": {
+    "background": "#0f1113",
+    "surface": "#1b1f23",
+    "text": "#ffffff",
+    "muted": "#a7b0b8",
+    "radius": 18,
+    "font": "sans"
+  },
+  "nav": [
+    {
+      "label": "Home",
+      "pageId": "home"
+    },
+    {
+      "label": "Programs",
+      "pageId": "programs"
+    },
+    {
+      "label": "About",
+      "pageId": "about"
+    },
+    {
+      "label": "Contact",
+      "pageId": "contact"
+    }
+  ],
+  "pages": [
+    {
+      "id": "home",
+      "slug": "/",
+      "title": "Home",
+      "seo": {
+        "title": "Example Coaching",
+        "description": "Stronger every week."
+      },
+      "sections": [
+        {
+          "id": "hero",
+          "type": "hero",
+          "eyebrow": "Example Coaching",
+          "title": "Stronger every week.",
+          "body": "Welcome to Example Coaching. Coaching built around your goals, your schedule, and your life.",
+          "cta": {
+            "label": "Start today",
+            "action": {
+              "type": "page",
+              "pageId": "contact"
+            }
+          }
+        },
+        {
+          "id": "features",
+          "type": "features",
+          "title": "How it works",
+          "items": [
+            {
+              "title": "Personal plan",
+              "body": "A program built for your goals and updated as you progress."
+            },
+            {
+              "title": "Coach in your corner",
+              "body": "Check-ins, feedback, and adjustments every week."
+            },
+            {
+              "title": "Track everything",
+              "body": "Sessions, habits, and progress in one place."
+            }
+          ]
+        },
+        {
+          "id": "home-cta",
+          "type": "cta",
+          "title": "Ready when you are",
+          "body": "Tell us where you want to be. We'll build the route.",
+          "cta": {
+            "label": "Get in touch",
+            "action": {
+              "type": "page",
+              "pageId": "contact"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "programs",
+      "slug": "/programs",
+      "title": "Programs",
+      "seo": {},
+      "sections": [
+        {
+          "id": "programs-heading",
+          "type": "heading",
+          "text": "Programs"
+        },
+        {
+          "id": "programs-list",
+          "type": "programs",
+          "items": [
+            {
+              "name": "Foundation",
+              "blurb": "Build the base: strength, movement quality, and consistency.",
+              "priceLabel": "From $49/mo",
+              "ctaLabel": "Enquire"
+            },
+            {
+              "name": "Performance",
+              "blurb": "Push capacity with structured progressive training.",
+              "priceLabel": "From $99/mo",
+              "ctaLabel": "Enquire"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "slug": "/about",
+      "title": "About",
+      "seo": {},
+      "sections": [
+        {
+          "id": "about-heading",
+          "type": "heading",
+          "text": "About Example Coaching"
+        },
+        {
+          "id": "about-copy",
+          "type": "text",
+          "text": "Add your story here: who you coach, how you work, and what your clients achieve."
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "slug": "/contact",
+      "title": "Contact",
+      "seo": {},
+      "sections": [
+        {
+          "id": "contact-form",
+          "type": "leadForm",
+          "title": "Work with us",
+          "body": "Tell us about your goals and we'll reply within one business day.",
+          "submitLabel": "Send"
+        }
+      ]
+    }
+  ],
+  "integrations": [
+    "forms"
+  ],
+  "footer": {
+    "text": "© Example Coaching",
+    "socials": []
+  }
+}

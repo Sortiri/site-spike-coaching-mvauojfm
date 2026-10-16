@@ -1,0 +1,25 @@
+{
+  "name": "sortiri-site-template-coach-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Spec-driven coach website template for Sortiri Sites. Renders entirely from the site spec (Convex draft/published documents, or the bundled site.spec.json fallback).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . || true"
+  },
+  "dependencies": {
+    "convex": "^1.46.0",
+    "next": "16.4.0",
+    "posthog-js": "^1.438.12",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}

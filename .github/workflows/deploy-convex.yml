@@ -1,0 +1,28 @@
+name: Deploy site backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "convex/**"
+      - ".github/workflows/deploy-convex.yml"
+
+concurrency:
+  group: convex-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      # Tier-3 only: content edits never touch this workflow, they are data
+      # writes to the deployment's draft/published spec documents.
+      - run: npx convex deploy -y
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
