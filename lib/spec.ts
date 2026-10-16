@@ -55,16 +55,16 @@ export function convexUrl(): string | null {
 async function fetchPublishedFromConvex(): Promise<WebsiteSpec | null> {
   const url = convexUrl();
   if (!url) return null;
-  try {
-    const client = new ConvexHttpClient(url);
-    const doc = (await client.query(getPublishedRef, {})) as { spec: WebsiteSpec } | null;
-    return doc?.spec ?? null;
-  } catch {
-    return null;
-  }
+  const client = new ConvexHttpClient(url);
+  const doc = (await client.query(getPublishedRef, {})) as { spec: WebsiteSpec } | null;
+  // Throw instead of returning null when a configured backend has no
+  // published spec yet: unstable_cache must not remember "not seeded" for
+  // an hour after provisioning seeds the deployment.
+  if (!doc?.spec) throw new Error("Published site spec has not been seeded yet.");
+  return doc.spec;
 }
 
-const cachedPublished = unstable_cache(fetchPublishedFromConvex, ["site-spec"], {
+const cachedPublished = unstable_cache(fetchPublishedFromConvex, ["site-spec-v2"], {
   tags: ["site-spec"],
   revalidate: 3600,
 });
@@ -75,8 +75,12 @@ const cachedPublished = unstable_cache(fetchPublishedFromConvex, ["site-spec"], 
  * site.spec.json snapshot so the site still renders with no backend.
  */
 export async function getPublishedSpec(): Promise<WebsiteSpec> {
-  const fromConvex = await cachedPublished();
-  return fromConvex ?? (fallbackSpec as WebsiteSpec);
+  try {
+    const fromConvex = await cachedPublished();
+    return fromConvex ?? (fallbackSpec as WebsiteSpec);
+  } catch {
+    return fallbackSpec as WebsiteSpec;
+  }
 }
 
 export function pageForSlug(spec: WebsiteSpec, slugParts: string[] | undefined): WebsitePage | null {
