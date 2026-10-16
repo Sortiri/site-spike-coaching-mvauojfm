@@ -75,6 +75,30 @@ export const setSpec = mutationGeneric({
   },
 });
 
+/**
+ * One-time provisioning hook: stores the preview token hash so the Sortiri
+ * editor's live preview can subscribe to the draft spec. Guarded by the
+ * same editor secret as setSpec.
+ */
+export const configureSite = mutationGeneric({
+  args: { editorSecret: v.string(), previewTokenHash: v.string() },
+  handler: async (ctx, { editorSecret, previewTokenHash }) => {
+    const expected = process.env.SITE_EDITOR_SECRET;
+    if (!expected || editorSecret !== expected) throw new Error("Not authorized");
+    if (!/^[a-f0-9]{64}$/.test(previewTokenHash)) throw new Error("Invalid preview token hash.");
+    const existing = await ctx.db
+      .query("siteSettings")
+      .withIndex("by_key", (q) => q.eq("key", "previewTokenHash"))
+      .unique();
+    if (existing) {
+      await ctx.db.patch(existing._id, { value: previewTokenHash });
+    } else {
+      await ctx.db.insert("siteSettings", { key: "previewTokenHash", value: previewTokenHash });
+    }
+    return { ok: true as const };
+  },
+});
+
 export const submitLead = mutationGeneric({
   args: {
     name: v.string(),
